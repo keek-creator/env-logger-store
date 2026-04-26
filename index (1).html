@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Env Logger Store</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f0f0f;
+        color: white;
+        text-align: center;
+        margin: 0;
+    }
+
+    .container {
+        padding: 50px;
+    }
+
+    .card {
+        background: #1c1c1c;
+        padding: 20px;
+        border-radius: 15px;
+        width: 300px;
+        margin: auto;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    button {
+        background: #00ff99;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background: #00cc77;
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+    }
+
+    .popup-content {
+        background: #222;
+        padding: 20px;
+        border-radius: 15px;
+        width: 300px;
+        margin: 150px auto;
+    }
+
+    input {
+        padding: 8px;
+        width: 90%;
+        margin: 5px;
+        border-radius: 8px;
+        border: none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Env Logger Store</h1>
+    <p>Fast • Secure • Undetected</p>
+
+    <div class="card">
+        <h2>Env Logger</h2>
+        <p>Price: Custom Payment</p>
+        <button onclick="openPopup()">Buy Now</button>
+    </div>
+</div>
+
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h3>Custom Payment</h3>
+
+        <p>Send your payment (game item, etc.) to:</p>
+        <b>kiefermanuel</b>
+
+        <p>Then fill this:</p>
+
+        <input type="text" id="username" placeholder="Your Username">
+        <input type="text" id="proof" placeholder="Proof (trade ID / details)">
+
+        <br><br>
+        <button onclick="submitOrder()">Submit</button>
+        <button onclick="closePopup()">Close</button>
+    </div>
+</div>
+
+<script>
+function openPopup() {
+    document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+function submitOrder() {
+    let user = document.getElementById("username").value;
+    let proof = document.getElementById("proof").value;
+
+    if(user === "" || proof === "") {
+        alert("Fill all fields!");
+        return;
+    }
+
+    alert("Order submitted!\nWait for verification.");
+
+    // OPTIONAL: send to Discord webhook
+    fetch("https://discord.com/api/webhooks/1490180158764744766/GlZ-N27wt564OT2iQHGrU6KsUgPazkC317BwNKaKLMuCKv7k5g6kmai1lgtx22judbxz", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            content: `New Order\nUser: ${user}\nProof: ${proof}`
+        })
+    });
+
+    closePopup();
+}
+</script>
+
+</body>
+</html>
